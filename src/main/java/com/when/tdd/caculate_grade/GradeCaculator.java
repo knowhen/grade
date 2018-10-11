@@ -1,54 +1,83 @@
 package com.when.tdd.caculate_grade;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 
 public class GradeCaculator {
-	private String gradeName;
-	private Date currentDate = new Date();
-	private Date dateOfGraduate;
-	private Integer currentGradeNumber;
 
-	public String caculate(Date dateOfEntrance, Integer schoolType, Integer gradeNumber) {
-		if (null == dateOfEntrance) {
-			throw new IllegalArgumentException("Student is not enrolled");
-		}
-		
-		dateOfGraduate = caculateGraduateDate(schoolType, gradeNumber, dateOfEntrance);
-		//System.out.println(dateOfGraduate);
-		
-		if (currentDate.after(dateOfGraduate)) {
-			throw new IllegalArgumentException("Student is graduated");
-		}
-		int currentYear = currentDate.getYear() + 1900;
-		int entranceYear = dateOfEntrance.getYear();
-		System.out.println("entranceYear:" + entranceYear);
-		System.out.println("currentYear:" + currentYear);
-		currentGradeNumber = gradeNumber + currentYear - entranceYear;
-		// 根据currentGradeNumber和学校类型/规则为gradeName赋值
-		return String.valueOf(currentGradeNumber);
-		
+	public String caculate(LocalDate entranceDate, int schoolType, int gradeRule, int gradeNumber) {
+		checkEntranceDate(entranceDate);
+		// 根据学校类型，入学时间，初始年级编号计算毕业时间
+		LocalDate graduateDate = caculateGraduateDate(schoolType, entranceDate, gradeNumber);
+		// 检查是否已经毕业
+		checkGraduateDate(graduateDate);
+		// 根据入学时间，毕业时间，初始年级编号和学校年级规则，返回当前学生年级名
+		return getGradeName(entranceDate, graduateDate, gradeRule, gradeNumber);
 	}
 
-	private Date caculateGraduateDate(Integer schoolType, Integer gradeNumber, Date dateOfEntrance) {
+	private void checkEntranceDate(LocalDate entranceDate) {
+		if (null == entranceDate) {
+			throw new IllegalArgumentException("Student is out of school");
+		}
+	}
+
+	private void checkGraduateDate(LocalDate graduateDate) {
+		if (LocalDate.now().isAfter(graduateDate)) {
+			throw new IllegalArgumentException("Student graduated from school");
+		}
+	}
+
+	private LocalDate caculateGraduateDate(int schoolType, LocalDate entranceDate, int gradeNumber) {
+		// 入学年份
+		int yearOfEntrance = entranceDate.getYear();
+		// 毕业的年份
 		int yearsOfGraduate;
-		int yearOfEntrance =  dateOfEntrance.getYear();
 		switch (schoolType) {
-			case 1:
-				yearsOfGraduate = 6 - gradeNumber + yearOfEntrance - 1900;
-				dateOfGraduate = new Date(yearsOfGraduate, 6, 10); 
-				break;
-			case 2:
-				yearsOfGraduate = 3 - gradeNumber + yearOfEntrance - 1900;
-				dateOfGraduate = new Date(yearsOfGraduate, 6, 10); 
-				break;
-			case 3:
-				yearsOfGraduate = 3 - gradeNumber + yearOfEntrance - 1900;
-				dateOfGraduate = new Date(yearsOfGraduate, 6, 10); 
-				break;
-			default:
-				throw new IllegalArgumentException("Illegal school type");
+		case 1:
+			yearsOfGraduate = 7 - gradeNumber + yearOfEntrance;
+			break;
+		case 2:
+			yearsOfGraduate = 11 - gradeNumber + yearOfEntrance;
+			break;
+		case 3:
+			yearsOfGraduate = 13 - gradeNumber + yearOfEntrance;
+			break;
+		default:
+			throw new IllegalArgumentException("Illegal school type");
 		}
-		return dateOfGraduate;
+		return LocalDate.of(yearsOfGraduate, 9, 1);
 	}
 
+	private String getGradeName(LocalDate entranceDate, LocalDate graduateDate, int gradeRule, int gradeNumber) {
+		switch (gradeRule) {
+		case 1:
+			int currentGradeNumber = getCurrentGradeNumber(entranceDate, gradeNumber);
+			return getGradeNameFromNumber(currentGradeNumber);
+		case 2:
+			return getGradeNameFromDate(entranceDate);
+		case 3:
+			return getGradeNameFromDate(graduateDate);
+		default:
+			throw new IllegalArgumentException("Illegal school type");
+		}
+	}
+
+	private int getCurrentGradeNumber(LocalDate entranceDate, int gradeNumber) {
+		LocalDate currentDate = LocalDate.now();
+		Period period = entranceDate.until(currentDate);
+		return gradeNumber + period.getYears();
+	}
+
+	private String getGradeNameFromNumber(Integer gradeNumber) {
+		for (GradeName gradeName : GradeName.values()) {
+			if (gradeName.getGradeNumber() == gradeNumber) {
+				return gradeName.name();
+			}
+		}
+		throw new IllegalArgumentException("Unsupported grade number");
+	}
+
+	private String getGradeNameFromDate(LocalDate date) {
+		return String.valueOf(date.getYear()) + "级";
+	}
 }
