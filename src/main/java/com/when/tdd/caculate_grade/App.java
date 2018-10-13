@@ -7,13 +7,12 @@ import java.util.Date;
 
 public class App {
 	public static void main(String[] args) {
-		System.out.println(GradeName.NINE.getGradeNumber());
+		
+		System.out.println(LocalDate.of(2018, 1, 1).getYear());
 	}
 
-	private LocalDate dateToLocalDate(Date date) {
-		Instant instant = date.toInstant();
-		ZoneId zoneId = ZoneId.systemDefault();
-		return instant.atZone(zoneId).toLocalDate();
+	private static LocalDate dateToLocalDate(Date date) {
+		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
 	enum GradeName {

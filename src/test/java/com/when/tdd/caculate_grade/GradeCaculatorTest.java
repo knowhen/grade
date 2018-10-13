@@ -1,9 +1,12 @@
 package com.when.tdd.caculate_grade;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -15,87 +18,87 @@ public class GradeCaculatorTest {
 
 	private GradeCaculator caculator = new GradeCaculator();
 
-	private LocalDate entranceDate;
+	private Student student;
 
-	private int schoolType;
+	private School school;
 
-	private int gradeNumber;
-
-	private int gradeRule;
+	@Before
+	public void setUp() {
+		student = mock(Student.class);
+		school = mock(School.class);
+	}
 
 	@Test
 	public void whenStudentNotEnrolledThenThrowIllegalArgumentException() {
-		entranceDate = null;
-		schoolType = 1;
-		gradeRule = 1;
+		when(student.getEntranceDate()).thenReturn(null);
 		exception.expect(IllegalArgumentException.class);
 
-		caculator.caculate(entranceDate, schoolType, gradeRule, gradeNumber);
+		caculator.caculate(student, school);
 	}
-	
+
 	@Test
 	public void whenStudentGraduatedThenThrowIllegalArgumentException() {
-		entranceDate = LocalDate.of(2012, 9, 1);
-		schoolType = 1;
-		gradeNumber = 1;
-		gradeRule = 1;
+		when(student.getEntranceDate()).thenReturn(LocalDate.of(2012, 9, 1));
+		when(student.getGradeNumber()).thenReturn(1);
+		when(school.getGradeRule()).thenReturn(1);
+		when(school.getSchoolType()).thenReturn(1);
 		exception.expect(IllegalArgumentException.class);
 
-		caculator.caculate(entranceDate, schoolType, gradeRule, gradeNumber);
+		caculator.caculate(student, school);
 	}
 
 	@Test
 	public void whenStudentAtPrimarySchoolThenReturnGradeName() {
-		entranceDate = LocalDate.of(2015, 9, 10);
-		schoolType = 1;
-		gradeNumber = 1;
-		gradeRule = 1;
+		when(student.getEntranceDate()).thenReturn(LocalDate.of(2015, 9, 10));
+		when(student.getGradeNumber()).thenReturn(1);
+		when(school.getGradeRule()).thenReturn(1);
+		when(school.getSchoolType()).thenReturn(1);
 
-		String gradeName = caculator.caculate(entranceDate, schoolType, gradeRule, gradeNumber);
+		String gradeName = caculator.caculate(student, school);
 		assertEquals("四年级", gradeName);
 	}
 
 	@Test
 	public void whenStudentAtMiddleSchoolThenReturnGradeName() {
-		entranceDate = LocalDate.of(2017, 9, 1);
-		schoolType = 2;
-		gradeNumber = 7;
-		gradeRule = 1;
+		when(student.getEntranceDate()).thenReturn(LocalDate.of(2017, 9, 1));
+		when(student.getGradeNumber()).thenReturn(7);
+		when(school.getGradeRule()).thenReturn(1);
+		when(school.getSchoolType()).thenReturn(2);
 
-		String gradeName = caculator.caculate(entranceDate, schoolType, gradeRule, gradeNumber);
+		String gradeName = caculator.caculate(student, school);
 		assertEquals("八年级", gradeName);
 	}
 
 	@Test
 	public void whenStudentAtHighSchoolThenReturnGradeName() {
-		entranceDate = LocalDate.of(2016, 9, 1);
-		schoolType = 3;
-		gradeNumber = 10;
-		gradeRule = 1;
+		when(student.getEntranceDate()).thenReturn(LocalDate.of(2016, 9, 1));
+		when(student.getGradeNumber()).thenReturn(10);
+		when(school.getGradeRule()).thenReturn(1);
+		when(school.getSchoolType()).thenReturn(3);
 
-		String gradeName = caculator.caculate(entranceDate, schoolType, gradeRule, gradeNumber);
+		String gradeName = caculator.caculate(student, school);
 		assertEquals("高三", gradeName);
 	}
-	
+
 	@Test
 	public void whenStudentAtHighSchoolThenReturnGradeNameFromEntranceDate() {
-		entranceDate = LocalDate.of(2016, 9, 1);
-		schoolType = 3;
-		gradeNumber = 10;
-		gradeRule = 2;
-
-		String gradeName = caculator.caculate(entranceDate, schoolType, gradeRule, gradeNumber);
+		when(student.getEntranceDate()).thenReturn(LocalDate.of(2016, 9, 1));
+		when(student.getGradeNumber()).thenReturn(10);
+		when(school.getGradeRule()).thenReturn(2);
+		when(school.getSchoolType()).thenReturn(3);
+		
+		String gradeName = caculator.caculate(student, school);
 		assertEquals("2016级", gradeName);
 	}
-	
+
 	@Test
 	public void whenStudentAtHighSchoolThenReturnGradeNameFromGraduateDate() {
-		entranceDate = LocalDate.of(2016, 9, 1);
-		schoolType = 3;
-		gradeNumber = 10;
-		gradeRule = 3;
+		when(student.getEntranceDate()).thenReturn(LocalDate.of(2016, 9, 1));
+		when(student.getGradeNumber()).thenReturn(10);
+		when(school.getGradeRule()).thenReturn(3);
+		when(school.getSchoolType()).thenReturn(3);
 
-		String gradeName = caculator.caculate(entranceDate, schoolType, gradeRule, gradeNumber);
+		String gradeName = caculator.caculate(student, school);
 		assertEquals("2019级", gradeName);
 	}
 

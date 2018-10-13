@@ -4,15 +4,12 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class GradeCaculator {
-
-	public String caculate(LocalDate entranceDate, int schoolType, int gradeRule, int gradeNumber) {
-		checkEntranceDate(entranceDate);
-		// 根据学校类型，入学时间，初始年级编号计算毕业时间
-		LocalDate graduateDate = caculateGraduateDate(schoolType, entranceDate, gradeNumber);
-		// 检查是否已经毕业
+	
+	public String caculate(Student student, School school) {
+		checkEntranceDate(student.getEntranceDate());
+		LocalDate graduateDate = caculateGraduateDate(school, student);
 		checkGraduateDate(graduateDate);
-		// 根据入学时间，毕业时间，初始年级编号和学校年级规则，返回当前学生年级名
-		return getGradeName(entranceDate, graduateDate, gradeRule, gradeNumber);
+		return getGradeName(student, school);
 	}
 
 	private void checkEntranceDate(LocalDate entranceDate) {
@@ -26,13 +23,13 @@ public class GradeCaculator {
 			throw new IllegalArgumentException("Student graduated from school");
 		}
 	}
-
-	private LocalDate caculateGraduateDate(int schoolType, LocalDate entranceDate, int gradeNumber) {
-		// 入学年份
-		int yearOfEntrance = entranceDate.getYear();
+	
+	private LocalDate caculateGraduateDate(School school, Student student) {
+		int yearOfEntrance = student.getEntranceDate().getYear();
+		int gradeNumber = student.getGradeNumber();
 		// 毕业的年份
 		int yearsOfGraduate;
-		switch (schoolType) {
+		switch (school.getSchoolType()) {
 		case 1:
 			yearsOfGraduate = 7 - gradeNumber + yearOfEntrance;
 			break;
@@ -47,16 +44,16 @@ public class GradeCaculator {
 		}
 		return LocalDate.of(yearsOfGraduate, 9, 1);
 	}
-
-	private String getGradeName(LocalDate entranceDate, LocalDate graduateDate, int gradeRule, int gradeNumber) {
-		switch (gradeRule) {
+	
+	private String getGradeName(Student student, School school) {
+		switch (school.getGradeRule()) {
 		case 1:
-			int currentGradeNumber = getCurrentGradeNumber(entranceDate, gradeNumber);
+			int currentGradeNumber = getCurrentGradeNumber(student.getEntranceDate(), student.getGradeNumber());
 			return getGradeNameFromNumber(currentGradeNumber);
 		case 2:
-			return getGradeNameFromDate(entranceDate);
+			return getGradeNameFromDate(student.getEntranceDate());
 		case 3:
-			return getGradeNameFromDate(graduateDate);
+			return getGradeNameFromDate(caculateGraduateDate(school, student));
 		default:
 			throw new IllegalArgumentException("Illegal school type");
 		}
