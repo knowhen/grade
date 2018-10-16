@@ -1,6 +1,5 @@
 package com.when.tdd.caculate_grade;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -9,6 +8,7 @@ public class App {
 	public static void main(String[] args) {
 		
 		System.out.println(LocalDate.of(2018, 1, 1).getYear());
+		System.out.println(dateToLocalDate(new Date()));
 	}
 
 	private static LocalDate dateToLocalDate(Date date) {
