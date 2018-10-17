@@ -1,15 +1,19 @@
-package com.when.tdd.caculate_grade;
+package com.when.tdd.caculategrade;
 
 import java.time.LocalDate;
 import java.time.Period;
 
-public class NormalGradeRule extends GradeRule {
+/**
+ * @author when
+ */
+public class NormalGradeRule extends BaseGradeRule {
 
 	@Override
 	public int getGradeRule() {
 		return 1;
 	}
 
+	@Override
 	public String getGradeName(Student student) {
 		int currentGradeNumber = getCurrentGradeNumber(student.getEntranceDate(), student.getGradeNumber());
 		return getGradeNameFromNumber(currentGradeNumber);

@@ -1,6 +1,9 @@
-package com.when.tdd.caculate_grade;
+package com.when.tdd.caculategrade;
 
-public class PrimaryGradeNumber extends GradeNumber {
+/**
+ * @author when
+ */
+public class PrimaryGradeNumber extends BaseGradeNumber {
 
 	@Override
 	int getGraduateGradeNumber() {

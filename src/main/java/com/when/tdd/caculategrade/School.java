@@ -1,7 +1,10 @@
-package com.when.tdd.caculate_grade;
+package com.when.tdd.caculategrade;
 
 import java.time.LocalDate;
 
+/**
+ * @author when
+ */
 public class School {
 	public static final int PRIMARY_SCHOOL = 1;
 	public static final int MIDDLE_SCHOOL = 2;
@@ -11,8 +14,8 @@ public class School {
 	public static final int ENTRANCE_DATE = 2;
 	public static final int GRADUATE_DATE = 3;
 
-	private GradeNumber gradeNumber;
-	private GradeRule gradeRule;
+	private BaseGradeNumber gradeNumber;
+	private BaseGradeRule gradeRule;
 
 	public School() {
 	}
@@ -58,7 +61,7 @@ public class School {
 		return gradeRule.getGradeRule();
 	}
 
-	public GradeNumber getGradeNumber() {
+	public BaseGradeNumber getGradeNumber() {
 		return gradeNumber;
 	}
 

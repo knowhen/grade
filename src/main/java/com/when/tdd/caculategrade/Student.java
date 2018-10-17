@@ -1,15 +1,17 @@
-package com.when.tdd.caculate_grade;
+package com.when.tdd.caculategrade;
 
 import java.time.LocalDate;
 
+/**
+ * @author when
+ */
 public class Student {
 	private int gradeNumber;
 	private String gradeName;
 	private School school;
 	private LocalDate entranceDate;
 	private LocalDate graduateDate;
-	
-	
+
 	public Student() {
 	}
 
@@ -60,5 +62,5 @@ public class Student {
 	public String getGradeName() {
 		return gradeName;
 	}
-	
+
 }

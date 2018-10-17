@@ -1,6 +1,9 @@
-package com.when.tdd.caculate_grade;
+package com.when.tdd.caculategrade;
 
-public class GraduateGradeRule extends GradeRule {
+/**
+ * @author when
+ */
+public class GraduateGradeRule extends BaseGradeRule {
 
 	@Override
 	public int getGradeRule() {

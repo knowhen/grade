@@ -1,4 +1,4 @@
-package com.when.tdd.caculate_grade;
+package com.when.tdd.caculategrade;
 
 import static org.junit.Assert.*;
 import java.time.LocalDate;
@@ -8,6 +8,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.when.tdd.caculategrade.GradeCaculator;
+import com.when.tdd.caculategrade.School;
+import com.when.tdd.caculategrade.Student;
+/**
+ * 
+ * @author when
+ *
+ */
 public class GradeCaculatorTest {
 
 	@Rule

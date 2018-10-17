@@ -1,7 +1,10 @@
-package com.when.tdd.caculate_grade;
+package com.when.tdd.caculategrade;
 
 import java.time.LocalDate;
 
+/**
+ * @author when
+ */
 public class GradeCaculator {
 
 	public String caculate(Student student, LocalDate date) {
@@ -9,7 +12,7 @@ public class GradeCaculator {
 		checkGraduateDate(student.getGraduateDate(), date);
 		return student.getGradeName();
 	}
-	
+
 	private void checkEntranceDate(LocalDate entranceDate, LocalDate date) {
 		if (date.isBefore(entranceDate)) {
 			throw new IllegalArgumentException("Student is not enrolled");

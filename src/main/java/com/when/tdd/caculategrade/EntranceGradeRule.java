@@ -1,9 +1,11 @@
-package com.when.tdd.caculate_grade;
+package com.when.tdd.caculategrade;
 
 import java.time.LocalDate;
 
-public class EntranceGradeRule extends GradeRule {
-	
+/**
+ * @author when
+ */
+public class EntranceGradeRule extends BaseGradeRule {
 
 	@Override
 	public int getGradeRule() {
