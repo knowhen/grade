@@ -62,8 +62,13 @@ public class School {
 		return grade;
 	}
 
-	public String getGradeName(LocalDate entranceDate, int gradeNumber) {
+	public String getGradeNameOfDate(LocalDate entranceDate, int gradeNumber, LocalDate date) {
 		return gradeRule.getGradeName(entranceDate, gradeNumber, grade);
+	}
+
+	public LocalDate caculateGraduateGradeDate(Student student) {
+		int graduateYear = getGrade().caculateGraduateYear(student.getEntranceDate(), student.getGradeNumber());
+		return LocalDate.of(graduateYear, 9, 1);
 	}
 
 }
