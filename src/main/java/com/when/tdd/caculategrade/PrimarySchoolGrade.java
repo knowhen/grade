@@ -3,16 +3,15 @@ package com.when.tdd.caculategrade;
 /**
  * @author when
  */
-public class MiddleGradeNumber extends BaseGradeNumber {
+public class PrimarySchoolGrade extends BaseGrade {
 
 	@Override
 	int getGraduateGradeNumber() {
-		return 10;
+		return 7;
 	}
 
 	@Override
 	int getEntranceGradeNumber() {
-		return 7;
+		return 1;
 	}
-
 }

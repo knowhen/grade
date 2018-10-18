@@ -14,27 +14,24 @@ public class School {
 	public static final int ENTRANCE_DATE = 2;
 	public static final int GRADUATE_DATE = 3;
 
-	private BaseGradeNumber gradeNumber;
+	private BaseGrade grade;
 	private BaseGradeRule gradeRule;
 
-	public School() {
-	}
-
 	public School(int schoolType, int gradeRule) {
-		setGraduateGradeNumber(schoolType);
+		setGrade(schoolType);
 		setGradeRule(gradeRule);
 	}
 
-	public void setGraduateGradeNumber(int schoolType) {
+	public void setGrade(int schoolType) {
 		switch (schoolType) {
 		case PRIMARY_SCHOOL:
-			gradeNumber = new PrimaryGradeNumber();
+			grade = new PrimarySchoolGrade();
 			break;
 		case MIDDLE_SCHOOL:
-			gradeNumber = new MiddleGradeNumber();
+			grade = new MiddleSchoolGrade();
 			break;
 		case HIGH_SCHOOL:
-			gradeNumber = new HighGradeNumber();
+			grade = new HighSchoolGrade();
 			break;
 		default:
 			throw new IllegalArgumentException("Incorrect school type");
@@ -61,16 +58,12 @@ public class School {
 		return gradeRule.getGradeRule();
 	}
 
-	public BaseGradeNumber getGradeNumber() {
-		return gradeNumber;
+	public BaseGrade getGrade() {
+		return grade;
 	}
 
-	public LocalDate caculateGraduateDate(Student student) {
-		return gradeNumber.caculateGraduateDate(student);
-	}
-
-	public String getGradeName(Student student) {
-		return gradeRule.getGradeName(student);
+	public String getGradeName(LocalDate entranceDate, int gradeNumber) {
+		return gradeRule.getGradeName(entranceDate, gradeNumber, grade);
 	}
 
 }

@@ -10,7 +10,7 @@ public class GradeCaculator {
 	public String caculate(Student student, LocalDate date) {
 		checkEntranceDate(student.getEntranceDate(), date);
 		checkGraduateDate(student.getGraduateDate(), date);
-		return student.getGradeName();
+		return student.getGradeNameOfDate(date);
 	}
 
 	private void checkEntranceDate(LocalDate entranceDate, LocalDate date) {

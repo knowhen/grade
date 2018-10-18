@@ -13,16 +13,17 @@ public abstract class BaseGradeRule {
 	 */
 	public abstract int getGradeRule();
 
+	
 	/**
-	 * 根据学生信息和该校年级制定规则获取学生年级名称
-	 * 
-	 * @param student
-	 *            学生
-	 * @return 学生当前年级名称
+	 * 根据学生入学时间、入学年级编号和学校年级信息获取学生年级名称
+	 * @param entranceDate 入学时间
+	 * @param gradeNumber 入学年级编号
+	 * @param grade 学校年级信息
+	 * @return 学生年级名称
 	 */
-	public abstract String getGradeName(Student student);
+	public abstract String getGradeName(LocalDate entranceDate, int gradeNumber, BaseGrade grade);
 
-	protected String getGradeNameFromDate(LocalDate date) {
-		return String.valueOf(date.getYear()) + "级";
+	protected String getGradeNameFromYear(int year) {
+		return String.valueOf(year) + "级";
 	}
 }

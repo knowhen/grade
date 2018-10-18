@@ -3,7 +3,7 @@ package com.when.tdd.caculategrade;
 /**
  * @author when
  */
-public class HighGradeNumber extends BaseGradeNumber {
+public class HighSchoolGrade extends BaseGrade {
 
 	@Override
 	int getGraduateGradeNumber() {
