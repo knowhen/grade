@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 
 public class EntranceGradeRuleTest {
     private EntranceGradeRule entranceGradeRule = new EntranceGradeRule();
+    private LocalDate date = LocalDate.now();
     private BaseGrade baseGrade;
 
     @Test
@@ -28,7 +29,7 @@ public class EntranceGradeRuleTest {
                 return 1;
             }
         };
-        assertEquals("2018级", entranceGradeRule.getGradeName(LocalDate.of(2018, 9, 1), 1, baseGrade));
+        assertEquals("2018级", entranceGradeRule.getGradeName(LocalDate.of(2018, 9, 1), 1, baseGrade, date));
     }
 
     @Test
@@ -44,6 +45,6 @@ public class EntranceGradeRuleTest {
                 return 1;
             }
         };
-        assertEquals("2016级", entranceGradeRule.getGradeName(LocalDate.of(2018, 9, 1), 3, baseGrade));
+        assertEquals("2016级", entranceGradeRule.getGradeName(LocalDate.of(2018, 9, 1), 3, baseGrade, date));
     }
 }

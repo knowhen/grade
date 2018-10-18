@@ -1,20 +1,20 @@
 package com.when.tdd.caculategrade;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * @author when
  */
-public class Student {
+public class StudentInfoEntity {
     private int gradeNumber;
-    private LocalDate entranceDate;
+    private Date entranceDate;
 
-    public Student(LocalDate entranceDate, int gradeNumber) {
+    public StudentInfoEntity(Date entranceDate, int gradeNumber) {
         this.entranceDate = entranceDate;
         this.gradeNumber = gradeNumber;
     }
 
-    public LocalDate getEntranceDate() {
+    public Date getEntranceDate() {
         return entranceDate;
     }
 
@@ -26,7 +26,7 @@ public class Student {
         this.gradeNumber = gradeNumber;
     }
 
-    public void setEntranceDate(LocalDate entranceDate) {
+    public void setEntranceDate(Date entranceDate) {
         this.entranceDate = entranceDate;
     }
 

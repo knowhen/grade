@@ -14,7 +14,7 @@ public class BaseGradeRuleTest {
         }
 
         @Override
-        public String getGradeName(LocalDate entranceDate, int gradeNumber, BaseGrade grade) {
+        public String getGradeName(LocalDate entranceDate, int gradeNumber, BaseGrade grade, LocalDate date) {
             return null;
         }
     };

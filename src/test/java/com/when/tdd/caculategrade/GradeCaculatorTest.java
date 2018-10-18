@@ -1,10 +1,11 @@
 package com.when.tdd.caculategrade;
 
 import static org.junit.Assert.*;
-import java.time.LocalDate;
 
-import com.when.tdd.caculategrade.School;
-import com.when.tdd.caculategrade.Student;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,11 +23,13 @@ public class GradeCaculatorTest {
 
 	private GradeCaculator caculator;
 
-	private Student student;
+	private StudentInfoEntity studentInfoEntity;
 
-	private School school;
+	private SchoolInfoEntity schoolInfoEntity;
 	
 	private LocalDate now;
+
+	private Date entranceDate;
 
 	@Before
 	public void setUp() {
@@ -36,92 +39,108 @@ public class GradeCaculatorTest {
 
 	@Test
 	public void whenStudentNotEnrolledThenThrowIllegalArgumentException() {
-		school = new School(1, 1);
-		student = new Student(now, 1);
+		schoolInfoEntity = new SchoolInfoEntity(1, 1);
+		studentInfoEntity = new StudentInfoEntity(new Date(), 1);
 		exception.expect(IllegalArgumentException.class);
 
-		caculator.getGradeNameOfDate(student, school, LocalDate.of(2017, 1, 1));
+		caculator.getGradeNameOfDate(studentInfoEntity, schoolInfoEntity, LocalDate.of(2017, 1, 1));
 	}
 
 	@Test
 	public void whenStudentGraduatedThenThrowIllegalArgumentException() {
-		school = new School(1, 1);
-		student = new Student(LocalDate.of(2012, 9, 1), 1);
+		schoolInfoEntity = new SchoolInfoEntity(1, 1);
+		Date entranceDate = localDate2Date(LocalDate.of(2012, 9, 1));
+		studentInfoEntity = new StudentInfoEntity(entranceDate, 1);
 		exception.expect(IllegalArgumentException.class);
 
-		caculator.getGradeNameOfDate(student, school, now);
+		caculator.getGradeNameOfDate(studentInfoEntity, schoolInfoEntity, LocalDate.now());
 	}
 
 	@Test
 	public void whenStudentAtPrimarySchoolThenReturnGradeName() {
-		school = new School(1, 1);
-		student = new Student(LocalDate.of(2015, 9, 10), 1);
+		schoolInfoEntity = new SchoolInfoEntity(1, 1);
+		entranceDate = localDate2Date(LocalDate.of(2015, 9, 10));
+		studentInfoEntity = new StudentInfoEntity(entranceDate, 1);
 
-		String gradeName = caculator.getGradeNameOfDate(student, school, now);
+		String gradeName = caculator.getGradeNameOfDate(studentInfoEntity, schoolInfoEntity, LocalDate.now());
 		assertEquals("四年级", gradeName);
 	}
 
 	@Test
 	public void whenStudentAtMiddleSchoolThenReturnGradeName() {
-		school = new School(2, 1);
-		student = new Student(LocalDate.of(2017, 9, 1), 7);
+		schoolInfoEntity = new SchoolInfoEntity(2, 1);
+		entranceDate = localDate2Date(LocalDate.of(2017, 9, 1));
+		studentInfoEntity = new StudentInfoEntity(entranceDate, 7);
 
-		String gradeName = caculator.getGradeNameOfDate(student, school, now);
+		String gradeName = caculator.getGradeNameOfDate(studentInfoEntity, schoolInfoEntity, LocalDate.now());
 		assertEquals("八年级", gradeName);
 	}
 
 	@Test
 	public void whenStudentAtHighSchoolThenReturnGradeName() {
-		school = new School(3, 1);
-		student = new Student(LocalDate.of(2016, 9, 1), 10);
+		schoolInfoEntity = new SchoolInfoEntity(3, 1);
+		entranceDate = localDate2Date(LocalDate.of(2016, 9, 1));
+		studentInfoEntity = new StudentInfoEntity(entranceDate, 10);
 
-		String gradeName = caculator.getGradeNameOfDate(student, school, now);
+		String gradeName = caculator.getGradeNameOfDate(studentInfoEntity, schoolInfoEntity, LocalDate.now());
 		assertEquals("高三", gradeName);
 	}
 
 	@Test
 	public void whenStudentAtHighSchoolThenReturnGradeNameFromEntranceDate() {
-		school = new School(3, 2);
-		student = new Student(LocalDate.of(2016, 9, 1), 10);
+		schoolInfoEntity = new SchoolInfoEntity(3, 2);
+		entranceDate = localDate2Date(LocalDate.of(2016, 9, 1));
+		studentInfoEntity = new StudentInfoEntity(entranceDate, 10);
 
-		String gradeName = caculator.getGradeNameOfDate(student, school, now);
+		String gradeName = caculator.getGradeNameOfDate(studentInfoEntity, schoolInfoEntity, LocalDate.now());
 		assertEquals("2016级", gradeName);
 	}
 
 	@Test
 	public void whenStudentAtHighSchoolThenReturnGradeNameFromGraduateDate() {
-		school = new School(3, 3);
-		student = new Student(LocalDate.of(2016, 9, 1), 10);
+		schoolInfoEntity = new SchoolInfoEntity(3, 3);
+		entranceDate = localDate2Date(LocalDate.of(2016, 9, 1));
+		studentInfoEntity = new StudentInfoEntity(entranceDate, 10);
 
-		String gradeName = caculator.getGradeNameOfDate(student, school, now);
+		String gradeName = caculator.getGradeNameOfDate(studentInfoEntity, schoolInfoEntity, now);
 		assertEquals("2019级", gradeName);
 	}
 	
 	@Test
 	public void givenMidwayEntranceStudentThenReturnGradeName() {
-		school = new School(3, 1);
-		student = new Student(LocalDate.of(2018, 9, 1), 11);
+		schoolInfoEntity = new SchoolInfoEntity(3, 1);
+		entranceDate = localDate2Date(LocalDate.of(2018, 9, 1));
+		studentInfoEntity = new StudentInfoEntity(entranceDate, 11);
 
-		String gradeName = caculator.getGradeNameOfDate(student, school, now);
+		String gradeName = caculator.getGradeNameOfDate(studentInfoEntity, schoolInfoEntity, now);
 		assertEquals("高二", gradeName);
 	}
 	
 	@Test
 	public void givenMidwayEntranceStudentThenReturnGradeNameFromEntranceDate() {
-		school = new School(3, 2);
-		student = new Student(LocalDate.of(2018, 9, 1), 11);
+		schoolInfoEntity = new SchoolInfoEntity(3, 2);
+		entranceDate = localDate2Date(LocalDate.of(2018, 9, 1));
+		studentInfoEntity = new StudentInfoEntity(entranceDate, 11);
 
-		String gradeName = caculator.getGradeNameOfDate(student, school, now);
+		String gradeName = caculator.getGradeNameOfDate(studentInfoEntity, schoolInfoEntity, now);
 		assertEquals("2017级", gradeName);
 	}
 	
 	@Test
 	public void givenMidwayEntranceStudentThenReturnGradeNameFormGraduateDate() {
-		school = new School(3, 3);
-		student = new Student(LocalDate.of(2018, 9, 1), 11);
+		schoolInfoEntity = new SchoolInfoEntity(3, 3);
+		entranceDate = localDate2Date(LocalDate.of(2018, 9, 1));
+		studentInfoEntity = new StudentInfoEntity(entranceDate, 11);
 
-		String gradeName = caculator.getGradeNameOfDate(student, school, now);
+		String gradeName = caculator.getGradeNameOfDate(studentInfoEntity, schoolInfoEntity, now);
 		assertEquals("2020级", gradeName);
 	}
 
+	private LocalDate date2LocalDate(Date date) {
+		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	}
+
+	private Date localDate2Date(LocalDate localDate) {
+		return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
 }

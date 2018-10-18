@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 
 public class NormalGradeRuleTest {
     private NormalGradeRule normalGradeRule = new NormalGradeRule();
+    private LocalDate date = LocalDate.now();
     private BaseGrade baseGrade;
 
     @Test
@@ -29,7 +30,7 @@ public class NormalGradeRuleTest {
             }
         };
 
-        assertEquals("一年级", normalGradeRule.getGradeName(LocalDate.of(2018, 9, 1), 1, baseGrade));
+        assertEquals("一年级", normalGradeRule.getGradeName(LocalDate.of(2018, 9, 1), 1, baseGrade, date));
     }
 
     @Test
@@ -46,7 +47,7 @@ public class NormalGradeRuleTest {
             }
         };
 
-        assertEquals("三年级", normalGradeRule.getGradeName(LocalDate.of(2018, 9, 1), 3, baseGrade));
+        assertEquals("三年级", normalGradeRule.getGradeName(LocalDate.of(2018, 9, 1), 3, baseGrade, date));
     }
 
 }

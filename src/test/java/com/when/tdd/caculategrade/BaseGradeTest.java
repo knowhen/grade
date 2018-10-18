@@ -8,10 +8,11 @@ import static org.junit.Assert.*;
 
 public class BaseGradeTest {
     private BaseGrade baseGrade = new PrimarySchoolGrade();
+    private LocalDate date = LocalDate.now();
 
     @Test
     public void testGetCurrentGradeNumber() {
-        int currentGradeNumber = baseGrade.getCurrentGradeNumber(LocalDate.of(2015, 9,1 ), 1);
+        int currentGradeNumber = baseGrade.getCurrentGradeNumber(LocalDate.of(2015, 9,1 ), 1, date);
         assertEquals(4, currentGradeNumber);
     }
 

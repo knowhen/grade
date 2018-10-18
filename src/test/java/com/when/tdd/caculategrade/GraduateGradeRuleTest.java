@@ -1,5 +1,6 @@
 package com.when.tdd.caculategrade;
 
+import net.bytebuddy.asm.Advice;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import static org.junit.Assert.*;
 
 public class GraduateGradeRuleTest {
     private GraduateGradeRule graduateGradeRule = new GraduateGradeRule();
+    private LocalDate date = LocalDate.now();
     private BaseGrade baseGrade;
 
     @Test
@@ -28,7 +30,7 @@ public class GraduateGradeRuleTest {
                 return 1;
             }
         };
-        assertEquals("2024级", graduateGradeRule.getGradeName(LocalDate.of(2018, 9, 1), 1, baseGrade));
+        assertEquals("2024级", graduateGradeRule.getGradeName(LocalDate.of(2018, 9, 1), 1, baseGrade, date));
     }
 
     @Test
@@ -44,6 +46,6 @@ public class GraduateGradeRuleTest {
                 return 1;
             }
         };
-        assertEquals("2022级", graduateGradeRule.getGradeName(LocalDate.of(2018, 9, 1), 3, baseGrade));
+        assertEquals("2022级", graduateGradeRule.getGradeName(LocalDate.of(2018, 9, 1), 3, baseGrade, date));
     }
 }

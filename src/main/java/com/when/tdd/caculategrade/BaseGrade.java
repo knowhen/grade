@@ -21,9 +21,8 @@ public abstract class BaseGrade {
 	 */
 	abstract int getEntranceGradeNumber();
 
-	public int getCurrentGradeNumber(LocalDate entranceDate, int gradeNumber) {
-		LocalDate currentDate = LocalDate.now();
-		Period period = entranceDate.until(currentDate);
+	public int getCurrentGradeNumber(LocalDate entranceDate, int gradeNumber, LocalDate date) {
+		Period period = entranceDate.until(date);
 		return gradeNumber + period.getYears();
 	}
 

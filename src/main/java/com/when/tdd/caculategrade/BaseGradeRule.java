@@ -21,7 +21,7 @@ public abstract class BaseGradeRule {
 	 * @param grade 学校年级信息
 	 * @return 学生年级名称
 	 */
-	public abstract String getGradeName(LocalDate entranceDate, int gradeNumber, BaseGrade grade);
+	public abstract String getGradeName(LocalDate entranceDate, int gradeNumber, BaseGrade grade, LocalDate date);
 
 	protected String getGradeNameFromYear(int year) {
 		return String.valueOf(year) + "级";

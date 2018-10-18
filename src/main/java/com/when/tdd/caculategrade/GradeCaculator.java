@@ -1,32 +1,34 @@
 package com.when.tdd.caculategrade;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 /**
  * @author when
  */
 public class GradeCaculator {
+    private GradeData gradeData;
 
-	public String getCurrentGradeName(Student student, School school) {
-		return getGradeNameOfDate(student, school, LocalDate.now());
-	}
+    public String getCurrentGradeName(StudentInfoEntity studentInfoEntity, SchoolInfoEntity schoolInfoEntity) {
+        return getGradeNameOfDate(studentInfoEntity, schoolInfoEntity, LocalDate.now());
+    }
 
-	public String getGradeNameOfDate(Student student, School school, LocalDate date) {
-		checkEntranceDate(student.getEntranceDate(), date);
-		checkGraduateDate(school.caculateGraduateGradeDate(student), date);
-		return school.getGradeNameOfDate(student.getEntranceDate(), student.getGradeNumber(), date);
-	}
+    public String getGradeNameOfDate(StudentInfoEntity studentInfoEntity, SchoolInfoEntity schoolInfoEntity, LocalDate date) {
+        initGradeDate(studentInfoEntity, schoolInfoEntity);
+        return gradeData.getGradeNameOfDate(date);
+    }
 
-	private void checkEntranceDate(LocalDate entranceDate, LocalDate date) {
-		if (date.isBefore(entranceDate)) {
-			throw new IllegalArgumentException("Student is not enrolled");
-		}
-	}
+    private void initGradeDate(StudentInfoEntity studentInfoEntity, SchoolInfoEntity schoolInfoEntity) {
+        LocalDate entranceDate = date2LocalDate(studentInfoEntity.getEntranceDate());
+        int initialGradeNumber = studentInfoEntity.getGradeNumber();
+        int schoolType = schoolInfoEntity.getSchoolType();
+        int gradeRule = schoolInfoEntity.getGradeRule();
+        gradeData = new GradeData(initialGradeNumber, entranceDate, schoolType, gradeRule);
+    }
 
-	private void checkGraduateDate(LocalDate graduateDate, LocalDate date) {
-		if (date.isAfter(graduateDate)) {
-			throw new IllegalArgumentException("Student graduated from school");
-		}
-	}
+    private LocalDate date2LocalDate(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
 
 }

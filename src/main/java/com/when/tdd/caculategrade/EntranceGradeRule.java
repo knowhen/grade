@@ -13,7 +13,7 @@ public class EntranceGradeRule extends BaseGradeRule {
 	}
 
 	@Override
-	public String getGradeName(LocalDate entranceDate, int gradeNumber, BaseGrade grade) {
+	public String getGradeName(LocalDate entranceDate, int gradeNumber, BaseGrade grade, LocalDate date) {
 		int entranceYear = grade.caculateEntranceYear(entranceDate, gradeNumber);
 		return getGradeNameFromYear(entranceYear);
 	}

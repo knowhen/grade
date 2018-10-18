@@ -13,8 +13,8 @@ public class NormalGradeRule extends BaseGradeRule {
 	}
 
 	@Override
-	public String getGradeName(LocalDate entranceDate, int gradeNumber, BaseGrade grade) {
-		int currentGradeNumber = grade.getCurrentGradeNumber(entranceDate, gradeNumber);
+	public String getGradeName(LocalDate entranceDate, int gradeNumber, BaseGrade grade, LocalDate date) {
+		int currentGradeNumber = grade.getCurrentGradeNumber(entranceDate, gradeNumber, date);
 		return GradeName.getGradeNameFromNumber(currentGradeNumber);
 	}
 

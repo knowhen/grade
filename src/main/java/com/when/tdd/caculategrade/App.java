@@ -2,6 +2,7 @@ package com.when.tdd.caculategrade;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 /**
@@ -15,4 +16,8 @@ public class App {
 	private static LocalDate dateToLocalDate(Date date) {
 		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
+
+    private static Date localDateToDate(LocalDate date) {
+        return Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
 }
